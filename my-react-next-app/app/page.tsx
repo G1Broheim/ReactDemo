@@ -20,7 +20,7 @@ export default async function Home() {
       <main>
         <h1>Weather Forecast</h1>
         <table>
-          <thead>
+          <thead> 
             <tr>
               <th>Date</th>
               <th>Temp (C)</th>

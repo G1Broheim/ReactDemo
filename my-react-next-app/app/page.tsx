@@ -1,19 +1,13 @@
+'use client';
+import { useEffect } from "react";
+import { WeatherHubService } from "./store/weather-hub.service";
 
-interface WeatherForecast {
-  date: string;
-  temperatureC: number;
-  temperatureF: number;
-  summary: string;
-}
+export default function Home() {
+  const { latestforecast, startConnection } = WeatherHubService();
 
-async function getForeCasts() : Promise<WeatherForecast[]> {
-  const data = await fetch('http://localhost:5000/WeatherForecast');
-  const forecasts = await data.json() as WeatherForecast[];
-  return forecasts;
-}
-
-export default async function Home() {
-  const forecasts: WeatherForecast[] = await getForeCasts();
+  useEffect(() => {
+    startConnection();
+  }, [startConnection]); // Added dependency array to run only on mount
 
   return (
     <div>
@@ -29,7 +23,7 @@ export default async function Home() {
             </tr>
           </thead>
           <tbody>
-            {forecasts.map(item => (
+            {latestforecast.map(item => (
               <tr key={item.date}>
                 <td>{item.date}</td>
                 <td>{item.temperatureC}</td>
